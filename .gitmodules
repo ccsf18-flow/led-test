@@ -1,0 +1,9 @@
+[submodule "rpi_ws281x"]
+	path = rpi_ws281x
+	url = https://github.com/ccsf18-flow/rpi_ws281x
+[submodule "musl"]
+	path = musl
+	url = git://git.musl-libc.org/musl
+[submodule "arch-rpi-cross"]
+	path = arch-rpi-cross
+	url = https://github.com/tavianator/arch-rpi-cross/
