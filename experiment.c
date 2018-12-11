@@ -14,8 +14,9 @@
 #include "rpi_ws281x/dma.h"
 #include "rpi_ws281x/pwm.h"
 #include "rpi_ws281x/version.h"
-
 #include "rpi_ws281x/ws2811.h"
+
+#include <wiringPi.h>
 
 
 #define ARRAY_SIZE(stuff)       (sizeof(stuff) / sizeof(stuff[0]))
@@ -133,7 +134,11 @@ int main(int argc, const char ** argv) {
     fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
     return ret;
   }
-
+  wiringPiSetup();
+  int set_hi = 1;
+  pinMode(28, OUTPUT);
+  pinMode(29, OUTPUT);
+  int o2 = 0;
 
   struct color ls = { 0 }, le = { 0 };
   struct color rs = { 0 }, re = { 0 };
@@ -158,8 +163,17 @@ int main(int argc, const char ** argv) {
       print_color(le);
       print_color(rs);
       print_color(re);
+      printf("%d\n", set_hi);
       printf("%d\n-----\n", k);
       o = 0;
+
+      if (o2 == 4) {
+        digitalWrite(29, set_hi ? HIGH : LOW);
+        digitalWrite(28, set_hi ? LOW : HIGH);
+        set_hi = !set_hi;
+        o2 = 0;
+      }
+      o2 += 1;
     }
 
     // printf("---\n");
